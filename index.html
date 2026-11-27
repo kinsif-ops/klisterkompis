@@ -724,6 +724,45 @@
   footer a.mail{font-weight:400}
   .sendrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
   .sendrow .btn{flex:1 1 160px;justify-content:center;min-height:48px}
+
+  /* Plass til Vipps-betaling (deaktivert til avtalen er klar) */
+  .vippsbtn{width:100%;justify-content:center;gap:.35em;background:#ff5b24;border-color:#ff5b24;color:#fff;min-height:54px;font-size:1.05rem;margin-top:6px}
+  .vippsbtn[disabled]{opacity:.45;cursor:not-allowed;scale:1!important}
+  .vhint{margin:8px 0 14px;font-size:.88rem;color:var(--muted)}
+
+  /* ===== Salgsbetingelser ===== */
+  .terms{background:var(--cream);padding-top:96px;padding-bottom:96px}
+  .terms .head{margin-bottom:28px}
+  .termsbox{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-l);overflow:hidden}
+  .termsbox>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 28px;font-family:Fraunces,Georgia,serif;font-size:1.3rem;min-height:44px}
+  .termsbox>summary::-webkit-details-marker{display:none}
+  .termsbox>summary span{font-family:"DM Sans",system-ui,sans-serif;font-size:1.6rem;line-height:1;transition:transform .3s var(--ease)}
+  .termsbox[open]>summary span{transform:rotate(45deg)}
+  .termsbox>summary:hover{color:var(--red)}
+  .termsbody{padding:4px 28px 32px;border-top:1px solid var(--line)}
+  .termsbody nav.toc{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-m);padding:16px 20px;margin:24px 0 8px}
+  .termsbody nav.toc ol{margin:0;padding-left:22px;columns:2;column-gap:32px}
+  .termsbody nav.toc li{margin:3px 0;break-inside:avoid}
+  .termsbody section{padding:24px 0;border-top:1px solid var(--line)}
+  .termsbody section:first-of-type{border-top:0}
+  .termsbody h2{font-family:Fraunces,Georgia,serif;font-weight:400;font-size:1.4rem;margin:0 0 8px;scroll-margin-top:100px}
+  .termsbody p,.termsbody li{max-width:70ch;line-height:1.65}
+  .termsbody ul{padding-left:20px}
+  .termsbody a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--red);text-underline-offset:3px}
+  .termsbody .box{background:var(--cream);border:1px solid var(--line);border-radius:var(--r-m);padding:16px 20px}
+  .termsbody .box dl{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;margin:0}
+  .termsbody .box dt{color:var(--muted)} .termsbody .box dd{margin:0;overflow-wrap:anywhere}
+  .sb-dato{color:var(--muted);font-size:.9rem;margin:8px 0 0}
+  @media(max-width:700px){.terms{padding-top:72px;padding-bottom:72px}.termsbox>summary{padding:18px 20px;font-size:1.15rem}.termsbody{padding:4px 20px 24px}.termsbody nav.toc ol{columns:1}.termsbody .box dl{grid-template-columns:1fr}.termsbody .box dt{margin-top:6px}}
+  /* team med flere personer */
+  .team{grid-template-columns:minmax(0,1fr);gap:10px}
+  .person>div{min-width:0}
+  .person span{overflow-wrap:anywhere;hyphens:auto}
+  .person{padding:16px 18px;gap:14px}
+  .av{width:50px;height:50px;font-size:1.1rem}
+  .av.r{background:var(--red);color:#fff}.av.p{background:#f29bb5;color:var(--ink)}.av.k{background:#f7f3ec;color:var(--ink)}
+  .person b{font-size:1.15rem}
+  .person span{font-size:.9rem}
 </style>
 </head>
 <body>
@@ -882,8 +921,11 @@
     </div>
     <!-- Når dere har et bilde av elevene, kan det legges inn her over teamkortene. -->
     <div class="team" aria-label="Teamet">
-      <div class="person"><span class="av" aria-hidden="true">TH</span><div><b>Theo Olsen Hagen</b><span>Daglig leder og økonomi</span></div></div>
-      <div class="person"><span class="av y" aria-hidden="true">JL</span><div><b>Johannes Lund Lie</b><span>Salg og marked</span></div></div>
+      <div class="person"><span class="av r" aria-hidden="true">TH</span><div><b>Theo Olsen Hagen</b><span>Daglig leder og innkjøpsansvarlig</span></div></div>
+      <div class="person"><span class="av y" aria-hidden="true">JL</span><div><b>Johannes Lund Lie</b><span>Markeds- og økonomiansvarlig</span></div></div>
+      <div class="person"><span class="av p" aria-hidden="true">J</span><div><b>Joakim</b><span>Kommunikasjonsansvarlig</span></div></div>
+      <div class="person"><span class="av k" aria-hidden="true">AG</span><div><b>Anna Gashi</b><span>Bærekrafts- og produksjonsansvarlig</span></div></div>
+      <div class="person"><span class="av r" aria-hidden="true">A</span><div><b>Aya</b><span>Personalansvarlig</span></div></div>
     </div>
   </div>
 </section>
@@ -945,10 +987,16 @@
       <p id="oppsett" class="oppsett"></p>
       <p id="upgrade" class="upgrade" hidden></p>
       <button class="btn" type="submit">Lag bestillingstekst</button>
-      <p class="formnote">Skjemaet sender ingenting av seg selv. Du får en ferdig e-post som du sender fra din egen e-post.</p>
+      <p class="formnote">Skjemaet sender ingenting av seg selv. Du får en ferdig e-post som du sender fra din egen e-post. Ved å bestille godtar du våre <a href="#salgsbetingelser">salgsbetingelser</a>.</p>
       <div id="done" role="status">
         <b>Supert!</b> Trykk «Åpne e-post», så får du en ferdig e-post til oss. Eller kopier teksten og send den til klisterkompisub@gmail.com.
         <pre id="out" tabindex="0"></pre>
+        <!-- ===== VIPPS: plass til «Betal med Vipps». Byttes ut med ekte knapp når Vipps-avtalen og API-nøklene er klare. ===== -->
+        <div class="vippsplass" id="vippsplass">
+          <button type="button" class="btn vippsbtn" disabled aria-describedby="vippsinfo">Betal med <b>Vipps</b></button>
+          <p class="vhint" id="vippsinfo">Betaling med Vipps kommer snart. Send bestillingen på e-post så lenge.</p>
+        </div>
+        <!-- ===== /VIPPS ===== -->
         <div class="sendrow"><a class="btn" id="sendmail" href="mailto:klisterkompisub@gmail.com">Åpne e-post</a><button type="button" class="btn line" id="copy">Kopier</button></div>
         <p class="donehint">Endrer du noe i skjemaet, oppdateres teksten automatisk.</p>
       </div>
@@ -961,13 +1009,86 @@
 <a class="mbar" href="#bestill" id="mbar" aria-hidden="true" tabindex="-1"><span>Bestill lappesett</span><b>Fra 69 kr per sett</b></a>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<section class="terms" id="salgsbetingelser">
+  <div class="wrap">
+    <div class="head">
+      <div><div class="eyebrow">Vilkår</div><h2>Salgsbetingelser</h2></div>
+      <p>Disse betingelsene gjelder når du kjøper lappesett fra Klister Kompis UB på denne nettsiden. Er du forbruker, gir loven deg rettigheter som disse betingelsene aldri kan begrense. Forbrukerkjøp reguleres blant annet av forbrukerkjøpsloven, angrerettloven, avtaleloven, markedsføringsloven og ehandelsloven.</p>
+    </div>
+    <details class="termsbox" id="sb-boks">
+      <summary>Les hele salgsbetingelsene <span aria-hidden="true">+</span></summary>
+      <div class="termsbody">
+<nav class="toc" aria-label="Innhold"><ol>
+<li><a href="#sb-parter">Partene</a></li><li><a href="#sb-pris">Pris</a></li><li><a href="#sb-avtale">Avtalen</a></li><li><a href="#sb-betaling">Betaling</a></li>
+<li><a href="#sb-levering">Levering</a></li><li><a href="#sb-angrerett">Angrerett</a></li><li><a href="#sb-retur">Retur</a></li><li><a href="#sb-reklamasjon">Reklamasjon og klager</a></li>
+<li><a href="#sb-bedrift">Kjøp for barnehager og skoler</a></li><li><a href="#sb-personvern">Personopplysninger</a></li><li><a href="#sb-konflikt">Konfliktløsning</a></li>
+</ol></nav>
+
+<section id="sb-parter"><h2>1. Partene</h2>
+<div class="box"><dl>
+<dt>Selger</dt><dd>Klister Kompis UB – ungdomsbedrift i regi av Ungt Entreprenørskap</dd>
+<dt>Org.nr.</dt><dd>838 795 722</dd>
+<dt>Adresse</dt><dd>c/o Vennesla videregående skole, Kommeren 1, 4700 Vennesla</dd>
+<dt>E-post</dt><dd><a href="mailto:klisterkompisub@gmail.com">klisterkompisub@gmail.com</a></dd>
+</dl></div>
+<p>Kjøper er personen eller virksomheten som gjør bestillingen.</p></section>
+
+<section id="sb-pris"><h2>2. Pris</h2>
+<p>Prisene på nettsiden er totalpriser i norske kroner. Ungdomsbedrifter er ikke merverdiavgiftspliktige, så prisene inneholder ikke mva. Eventuell frakt opplyses før du betaler. Prisen du har fått oppgitt ved bestilling, er den du betaler.</p></section>
+
+<section id="sb-avtale"><h2>3. Avtalen</h2>
+<p>Avtalen består av disse salgsbetingelsene og opplysningene i bestillingen din. Avtalen er bindende når vi har mottatt bestillingen og betalingen er godkjent, eller når vi har bekreftet en bestilling sendt på e-post. Er det skrive- eller regnefeil i bestillingen som du burde ha forstått, kan vi rette dem.</p></section>
+
+<section id="sb-betaling"><h2>4. Betaling</h2>
+<ul>
+<li><b>Vipps:</b> Når du godkjenner betalingen i Vipps, blir beløpet reservert på kontoen din. Vi trekker pengene først når varen er levert eller sendt.</li>
+<li><b>Bestilling på e-post:</b> Sender du bestillingen på e-post, får du betalingsinformasjon fra oss før vi leverer.</li>
+<li><b>Faktura:</b> Barnehager og skoler kan avtale faktura. Betalingsfristen er minst 14 dager fra mottak.</li>
+</ul>
+<p>Kjøpere under 18 år kan ikke betale med faktura.</p></section>
+
+<section id="sb-levering"><h2>5. Levering</h2>
+<p>Vi avtaler levering med deg etter bestilling, og leverer vanligvis innen en uke. Lappesett kan hentes ved Vennesla videregående skole uten kostnad. Må varen sendes, opplyser vi om frakt før du betaler. Har vi ikke levert innen 30 dager, kan du heve kjøpet. Risikoen for varen går over til deg når du har fått den.</p></section>
+
+<section id="sb-angrerett"><h2>6. Angrerett</h2>
+<p>Er du forbruker, har du 14 dagers angrerett når du kjøper på nett, uten å oppgi noen grunn. Fristen løper fra dagen du har fått varen. Ender fristen på en lørdag eller helligdag, forlenges den til nærmeste virkedag.</p>
+<p>Slik bruker du angreretten: Send en e-post til <a href="mailto:klisterkompisub@gmail.com">klisterkompisub@gmail.com</a> innen fristen. Skriv at du angrer kjøpet, og oppgi navn og hva du har bestilt. Du kan også bruke <a href="https://www.forbrukertilsynet.no/angrerett" rel="noopener">angreskjemaet fra Forbrukertilsynet</a>.</p></section>
+
+<section id="sb-retur"><h2>7. Retur og tilbakebetaling</h2>
+<ul>
+<li>Varen må leveres tilbake til oss senest 14 dager etter at du ga beskjed om at du angrer. Den kan leveres ved skolen eller sendes i posten.</li>
+<li>Du betaler selv de direkte kostnadene ved å sende varen tilbake.</li>
+<li>Vi betaler tilbake hele beløpet du har betalt, senest 14 dager etter at vi fikk beskjed om at du angrer. Vi kan holde tilbake pengene til vi har fått varen tilbake.</li>
+<li>Pengene betales tilbake på samme måte som du betalte, for eksempel til Vipps.</li>
+<li>Du er ansvarlig hvis varen har fått lavere verdi fordi den er brukt mer enn nødvendig for å se på den. Lapper som er tatt av arket og festet på klær, regnes som brukt.</li>
+</ul></section>
+
+<section id="sb-reklamasjon"><h2>8. Reklamasjon og klagehåndtering</h2>
+<p>Er det feil eller mangler ved varen, kan du klage (reklamere). Gi beskjed til <a href="mailto:klisterkompisub@gmail.com">klisterkompisub@gmail.com</a> innen rimelig tid etter at du oppdaget feilen. Klager du innen to måneder, er det alltid tidsnok. Fristen for å reklamere er to år fra du fikk varen. Det koster ingenting å klage.</p>
+<p>Beskriv hva som er feil, gjerne med bilde. Vi svarer så raskt vi kan, normalt innen en uke. Har varen en mangel, kan du etter loven kreve retting, ny vare, prisavslag eller å heve kjøpet.</p></section>
+
+<section id="sb-bedrift"><h2>9. Kjøp for barnehager og skoler</h2>
+<p>Kjøper en virksomhet, for eksempel en barnehage eller skole, gjelder kjøpsloven i stedet for forbrukerkjøpsloven, og det er ingen lovfestet angrerett. Vi tar likevel imot retur av ubrukte sett innen 14 dager. Reklamasjon ved feil og mangler behandles på samme måte som over.</p></section>
+
+<section id="sb-personvern"><h2>10. Personopplysninger</h2>
+<p>Vi bruker opplysningene du gir i bestillingen (navn, kontaktinformasjon og adresse) bare til å behandle og levere bestillingen. Opplysningene deles ikke med andre, bortsett fra med Vipps når du betaler der. Vi sletter opplysningene når de ikke lenger trengs, og senest når ungdomsbedriften avvikles. Du kan be om innsyn eller sletting ved å sende e-post til oss. Skjemaet på nettsiden lagrer det du skriver bare i din egen nettleser, så du ikke mister det.</p></section>
+
+<section id="sb-konflikt"><h2>11. Konfliktløsning</h2>
+<p>Vi prøver alltid å løse uenighet i minnelighet. Kommer vi ikke til enighet, kan du som forbruker kontakte <a href="https://www.forbrukerradet.no/" rel="noopener">Forbrukerrådet</a> for gratis mekling. Saken kan deretter bringes inn for Forbrukerklageutvalget.</p></section>
+
+<p class="sb-dato">Sist oppdatert: 25. november 2026</p>
+      </div>
+    </details>
+  </div>
+</section>
+
 <footer>
   <div class="wrap">
     <div class="cols">
       <div><a class="logo" href="#top"><svg class="" viewBox="1196 313 274 274" aria-hidden="true"><g fill="#c8322b"><path d="M1257.5 354.8Q1246.0 357.9 1241.5 360.5Q1237.0 363.1 1232.5 367.1Q1228.1 371.2 1225.4 375.1Q1222.8 379.0 1220.7 384.0Q1218.7 389.0 1217.6 399.0Q1216.5 409.0 1219.5 422.5Q1222.6 436.0 1228.2 448.0Q1233.8 460.0 1241.7 472.0Q1249.7 484.0 1268.7 506.0Q1287.8 528.0 1294.4 534.3Q1301.1 540.5 1305.5 543.4Q1310.0 546.3 1315.0 547.6Q1320.0 549.0 1325.0 548.0Q1330.0 547.1 1340.0 542.3Q1350.0 537.4 1360.0 531.1Q1370.0 524.9 1384.5 514.4Q1399.0 503.9 1408.0 496.2Q1417.0 488.5 1425.3 479.7Q1433.6 471.0 1438.5 463.5Q1443.3 456.0 1445.4 451.0Q1447.6 446.0 1449.0 440.0Q1450.4 434.0 1450.6 428.0Q1450.8 422.0 1450.0 416.5Q1449.2 411.0 1447.4 406.5Q1445.7 402.0 1442.3 397.0Q1439.0 392.0 1434.4 387.7Q1429.9 383.4 1426.0 381.0Q1422.0 378.5 1413.5 375.7Q1405.0 372.9 1396.0 372.3Q1387.0 371.8 1379.5 373.4Q1372.0 375.0 1361.5 378.5Q1351.0 382.1 1345.5 382.8Q1340.0 383.4 1334.5 381.4Q1329.0 379.3 1316.0 369.8Q1303.0 360.3 1294.0 356.6Q1285.0 353.0 1277.0 352.3Q1269.0 351.7 1257.5 354.8Z"/></g></svg><div>Klister Kompis<small>Ungdomsbedrift</small></div></a><p>Lappesett til barnejakker. En ungdomsbedrift drevet av elever ved Vennesla videregående skole.</p></div>
       <div><h4>Produkt</h4><ul><li><a href="#produktet">Lappesettet</a></li><li><a href="#priser">Priser</a></li><li><a href="#bestill">Bestill</a></li></ul></div>
       <div><h4>For hvem</h4><ul><li><a href="#priser">Foreldre</a></li><li><a href="#barnehage">Barnehager</a></li><li><a href="#skole">Barneskoler</a></li></ul></div>
-      <div><h4>Kontakt</h4><ul><li><a class="mail" href="mailto:klisterkompisub@gmail.com">klisterkompisub@gmail.com</a></li><li><a href="#om-oss">Om oss</a></li><li>Vennesla videregående skole</li></ul></div>
+      <div><h4>Kontakt</h4><ul><li><a class="mail" href="mailto:klisterkompisub@gmail.com">klisterkompisub@gmail.com</a></li><li><a href="#om-oss">Om oss</a></li><li><a href="#salgsbetingelser">Salgsbetingelser</a></li></ul></div>
     </div>
     <div class="bottom"><span>© 2026 Klister Kompis Ungdomsbedrift · Org.nr. 838 795 722</span><a href="#top" class="totop">Til toppen ↑</a></div>
   </div>
@@ -1039,6 +1160,12 @@
     $('done').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'nearest'});
     $('copy').focus({preventScroll:true});
   });
+
+  /* åpne salgsbetingelsene ved lenke */
+  const sbBoks=document.getElementById('sb-boks');
+  const apneSB=(h)=>{if(!sbBoks)return;if(h==='#salgsbetingelser'||/^#sb-/.test(h)){sbBoks.open=true;const m=document.querySelector(h);if(m)setTimeout(()=>m.scrollIntoView({block:'start'}),30)}};
+  apneSB(location.hash);addEventListener('hashchange',()=>apneSB(location.hash));
+  document.addEventListener('click',e=>{const a=e.target.closest('a[href="#salgsbetingelser"]');if(a&&sbBoks)sbBoks.open=true});
   f.addEventListener('input',()=>{lagre();if(f.classList.contains('sendt'))lagTekst()});
   f.addEventListener('change',()=>{lagre();if(f.classList.contains('sendt'))lagTekst()});
 
